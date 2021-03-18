@@ -3,21 +3,23 @@ import GeneralInfoForm from "./GeneralInfoForm";
 import GeneralPreview from "./GeneralPreview";
 import EducationForm from "./EducationForm";
 import EducationPreview from "./EducationPreview";
+import WorkForm from "./WorkForm";
+import WorkPreview from "./WorkPreview";
 
 class CVForm extends Component {
     constructor(props){
         super(props);
         this.state={
-            generalInfo: {name: "", email: "", phone: ""},
+            generalInfo: {},
             educationXP: {},
             workXP: [],
             generalInfoState: false,
             educationXPState: false,
             workXPState: false
         }
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.handleClick=this.handleClick.bind(this);
-        this.handleChange =this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     
     handleSubmit(e, data){
@@ -39,6 +41,7 @@ class CVForm extends Component {
     }
     
     handleChange(e, element){
+        console.log(e.target)
         let newState = Object.assign({}, this.state.element, {[e.target.name]: e.target.value});
         this.setState({ [element]: newState });
     }
@@ -53,6 +56,11 @@ class CVForm extends Component {
             {this.state.educationXPState ? <button id="educationXPState" onClick={this.handleClick} >Edit</button> : null}<br />
             {this.state.educationXPState ? <EducationPreview educationXP={this.state.educationXP} />:
                 < EducationForm formData={this.state.educationXP} onChange={this.handleChange} educationXP={this.state.educationXP}  handleSubmit={this.handleSubmit} /> }
+        </section>
+        <section>
+            {this.state.workXPState ? <button id="workXPState" onClick={this.handleClick} >Edit</button> : null}<br />
+            {this.state.workXPState ? <WorkPreview workXP={this.state.workXP} />:
+            <WorkForm handleSubmit={this.handleSubmit} />}
         </section>
         </main>);
     }

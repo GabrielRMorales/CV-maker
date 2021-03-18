@@ -11,11 +11,11 @@ const GeneralInfoForm = (props)=>{
         props.handleSubmit(e, formData);
         }}>
         <label htmlFor="name" >Name</label>
-        <input id="name" name="name" type="text" value={props.generalInfo.name} onChange={()=>{props.onChange("generalInfo")}} />
+        <input id="name" name="name" type="text" value={props.generalInfo.name} onChange={(e)=>{props.onChange(e,"generalInfo")}} />
         <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" value={props.generalInfo.email} onChange={()=>{props.onChange("generalInfo")}} />
+        <input id="email" name="email" type="email" value={props.generalInfo.email} onChange={(e)=>{props.onChange(e,"generalInfo")}} />
         <label htmlFor="phone">Phone Number</label>
-        <input id="phone" name="phone" type="number" value={props.generalInfo.phone} onChange={()=>{props.onChange("generalInfo")}} />
+        <input id="phone" name="phone" type="number" value={props.generalInfo.phone} onChange={(e)=>{props.onChange(e,"generalInfo")}} />
         <input type="submit" value="Submit" />
     </form>);
 

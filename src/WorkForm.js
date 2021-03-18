@@ -1,4 +1,4 @@
-import React, {React, Component} from "react";
+import React, {useEffect, useState} from "react";
 import WorkFormInput from "./WorkFormInput";
 //work xp form (company name, position, dates)
 //save in state as workXP = [{company, position, dateStart, dateEnd}]
@@ -8,22 +8,31 @@ const WorkForm = (props)=>{
 
     const workHistoryInputs = workHistory.map((work, index)=>{
         return < WorkFormInput onChange={(e)=>{
-
+            let id = e.target.id.split("-")[1];
             let newWorkHistory = workHistory.map((work, index)=>{
-                if (e.target.id===index){
-                   // return {company: e.target.value, position: e.target.value, dateStart: e.target.value, dateEnd: e.target.value}
-                   return {[e.target.name]: [e.target.value]}
+                if (id===index){
+                   return Object.assign({}, work, {[e.target.name]: [e.target.value]});
                 }
                 return work;
             });
             setWorkHistory(newWorkHistory);
-        }} val={workHistory} id={index} />;
+        }} 
+         val={workHistory} key={index} id={index} />;
     });
-    return (<form onSubmit={(e: React.FormEvent)=>{
+    return (<form id="workXP" onSubmit={(e: React.FormEvent)=>{
         e.preventDefault();
-        let data = new FormData(e.target);      
-        let formData = {company: data.get("company"), position: data.get("position"), dateStart: data.get("date-start"), dateEnd: data.get("date-end")}
-        props.handleSubmit(e, formData)}}>
+        let totalFormData=[];
+        for (let i=0;i<workHistory.length;i++){
+          
+            let data = new FormData(e.target);   
+            // console.log(data.get(`company-${i}`));
+            // console.log(data.get(`position-${i}`));
+            let formData = {company: data.get(`company-${i}`), position: data.get(`position-${i}`), dateStart: data.get(`date-start-${i}`), dateEnd: data.get(`date-end-${i}`)}
+            totalFormData.push(formData);
+        }
+
+        props.handleSubmit(e, totalFormData)
+    }} >
             {workHistoryInputs}
       {  //for adding multiple companies, you can use functionalState to add another chunk of input into state
               //include an add button that adds another object into local state, 
@@ -38,9 +47,11 @@ const WorkForm = (props)=>{
         //BASICALLY majority of state is handled within this app, only the submit coming from CVForm, consider making this component stateful if needed
 
       }
-        
-        <button onClick={()=>{
-            let newWorkHistory = [...workHistory, {}];
+        <input type="submit" value="Submit" />
+        <button onClick={(e)=>{
+            e.preventDefault();
+            let newWorkHistory = [...workHistory,
+                {}];
             setWorkHistory(newWorkHistory);
         }}>Add Company</button>
     </form>)
