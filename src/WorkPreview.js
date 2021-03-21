@@ -7,7 +7,7 @@ const WorkPreview = (props)=>{
             <h2>{work.position}</h2>
             <li>{work.dateStart}-{work.dateEnd}</li>
             <br />
-            </div>);
+            < /div>);
     });
     return (<section className="preview">
         <h2>Work Experience</h2>

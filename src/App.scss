@@ -1,0 +1,59 @@
+$regular-font-size: 14px * 1.65;
+$btn-background: #008CBA;
+button, input[type="submit"] {
+    background-color: $btn-background;
+    border: none;
+    &:hover {
+        color: white;
+    }
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding:5px;
+    label, input {
+        font-size: $regular-font-size;
+    }
+   
+}
+.preview {
+    padding: 5px;
+}
+
+.preview-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    
+    font-size: $regular-font-size;
+    button.edit {
+        padding: 40px;
+        order: 2;
+        font-size: $regular-font-size;
+    }
+}
+@media (min-width: 481px) {
+    main {
+        display: flex;
+        justify-content: center;
+        .form-container, .preview-container {
+            width: 75%;
+        }
+}
+}
+@media (min-width: 769px){
+    main {
+    .form-container {
+        width: 60%;
+    }
+    .preview-container {
+        button.edit {
+           height: 50%;
+           width: 100px;
+           align-self: center;
+           padding: 0;
+        }
+    }
+}
+}

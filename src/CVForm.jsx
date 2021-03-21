@@ -5,18 +5,20 @@ import EducationForm from "./EducationForm";
 import EducationPreview from "./EducationPreview";
 import WorkForm from "./WorkForm";
 import WorkPreview from "./WorkPreview";
+import {connect} from "react-redux";
+import {addToCV, editCV, updateCV } from "./ActionCreators";
 
 class CVForm extends Component {
     constructor(props){
         super(props);
-        this.state={
-            generalInfo: {},
-            educationXP: {},
-            workXP: [],
-            generalInfoState: false,
-            educationXPState: false,
-            workXPState: false
-        }
+        // this.state={
+        //     generalInfo: {},
+        //     educationXP: {},
+        //     workXP: [],
+        //     generalInfoState: false,
+        //     educationXPState: false,
+        //     workXPState: false
+        // }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -24,49 +26,56 @@ class CVForm extends Component {
     
     handleSubmit(e, data){
         e.preventDefault();
-        this.setState((prevState)=>({
-            [e.target.id]: data,
-           [`${e.target.id}State`]: !prevState[`${e.target.id}State`]
-        }), function(){
-            console.log(this.state);
-        });
+        this.props.dispatch(addToCV(data, e.target.id));
     }
 
     handleClick(e){
-        this.setState((prevState)=>({
-            [e.target.id]: !prevState[e.target.id]
-        }), function(){
-            console.log(this.state);
-        });
+        console.log("yo");
+        this.props.dispatch(editCV(e.target.id));
     }
     
     handleChange(e, element){
-        console.log(e.target)
-        let newState = Object.assign({}, this.state.element, {[e.target.name]: e.target.value});
-        this.setState({ [element]: newState });
+     this.props.dispatch(updateCV(element, e.target.name, e.target.value));
     }
 
     render(){
-        return (<main><section>
-        {this.state.generalInfoState ? <button id="generalInfoState" onClick={this.handleClick} >Edit</button> : null}<br/>
-        {    this.state.generalInfoState ? <GeneralPreview generalInfo={this.state.generalInfo} /> :
-            < GeneralInfoForm formData={this.state.generalInfo} onChange={this.handleChange} generalInfo={this.state.generalInfo} handleSubmit={this.handleSubmit}/>  }
+        return (<main><section className={this.props.generalInfoState ? "preview-container" : "form-container"}>
+        {this.props.generalInfoState ? <button id="generalInfoState" className="edit" onClick={this.handleClick} >Edit</button> : null }
+        {    this.props.generalInfoState ? <GeneralPreview generalInfo={this.props.generalInfo} /> :
+            < GeneralInfoForm formData={this.props.generalInfo} onChange={this.handleChange} generalInfo={this.props.generalInfo} handleSubmit={this.handleSubmit}/>  }
+        </section>
+        {/*<section>
+            {this.props.educationXPState ? <button id="educationXPState" onClick={this.handleClick} >Edit</button> : null}
+            {this.props.educationXPState ? <EducationPreview educationXP={this.props.educationXP} />:
+                < EducationForm formData={this.props.educationXP} onChange={this.handleChange} educationXP={this.props.educationXP}  handleSubmit={this.handleSubmit} /> }
         </section>
         <section>
-            {this.state.educationXPState ? <button id="educationXPState" onClick={this.handleClick} >Edit</button> : null}<br />
-            {this.state.educationXPState ? <EducationPreview educationXP={this.state.educationXP} />:
-                < EducationForm formData={this.state.educationXP} onChange={this.handleChange} educationXP={this.state.educationXP}  handleSubmit={this.handleSubmit} /> }
-        </section>
-        <section>
-            {this.state.workXPState ? <button id="workXPState" onClick={this.handleClick} >Edit</button> : null}<br />
-            {this.state.workXPState ? <WorkPreview workXP={this.state.workXP} />:
+            {this.props.workXPState ? <button id="workXPState" onClick={this.handleClick} >Edit</button> : null}
+            {this.props.workXPState ? <WorkPreview workXP={this.props.workXP} />:
             <WorkForm handleSubmit={this.handleSubmit} />}
-        </section>
+        </section>*/}
         </main>);
     }
 }
+//const mapDispatchToProps = {addToCV, editCV, updateCV };
 
-export default CVForm;
+function mapStateToProps(reduxState){
+    return {
+            generalInfo: reduxState.generalInfo,
+            educationXP: reduxState.educationXP,
+            workXP: reduxState.workXP,
+            generalInfoState: reduxState.generalInfoState,
+            educationXPState: reduxState.educationXPState,
+            workXPState: reduxState.workXPState
+    }
+}
+
+export default connect(mapStateToProps, null)(CVForm);
+//flows from rootReducer to MapStateToProps
+//then to each component
+//upon inputs, actionCreators are dispatched
+//these change the state in rootReducer
+
 //these can each be stateless functional components, pass down a submit function to save their data into state upon "Add"
 //general info form (name, email, phone)
 //save in state as generalInfo: {name, email, phone}
