@@ -2,10 +2,15 @@ $regular-font-size: 14px * 1.65;
 $btn-background: #008CBA;
 button, input[type="submit"] {
     background-color: $btn-background;
+    margin-top: 10px;
     border: none;
     &:hover {
         color: white;
     }
+}
+main {
+    display: flex;
+    flex-direction: column;
 }
 form {
     display: flex;

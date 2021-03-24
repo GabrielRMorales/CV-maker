@@ -30,7 +30,6 @@ class CVForm extends Component {
     }
 
     handleClick(e){
-        console.log("yo");
         this.props.dispatch(editCV(e.target.id));
     }
     
@@ -39,21 +38,22 @@ class CVForm extends Component {
     }
 
     render(){
-        return (<main><section className={this.props.generalInfoState ? "preview-container" : "form-container"}>
+        return (<main>
+        <section className={this.props.generalInfoState ? "preview-container" : "form-container"}>
         {this.props.generalInfoState ? <button id="generalInfoState" className="edit" onClick={this.handleClick} >Edit</button> : null }
         {    this.props.generalInfoState ? <GeneralPreview generalInfo={this.props.generalInfo} /> :
             < GeneralInfoForm formData={this.props.generalInfo} onChange={this.handleChange} generalInfo={this.props.generalInfo} handleSubmit={this.handleSubmit}/>  }
         </section>
-        {/*<section>
+        <section className={this.props.educationXPState ? "preview-container" : "form-container"}>
             {this.props.educationXPState ? <button id="educationXPState" onClick={this.handleClick} >Edit</button> : null}
             {this.props.educationXPState ? <EducationPreview educationXP={this.props.educationXP} />:
                 < EducationForm formData={this.props.educationXP} onChange={this.handleChange} educationXP={this.props.educationXP}  handleSubmit={this.handleSubmit} /> }
         </section>
-        <section>
+        <section className={this.props.workXPState ? "preview-container" : "form-container" }>
             {this.props.workXPState ? <button id="workXPState" onClick={this.handleClick} >Edit</button> : null}
             {this.props.workXPState ? <WorkPreview workXP={this.props.workXP} />:
             <WorkForm handleSubmit={this.handleSubmit} />}
-        </section>*/}
+        </section>
         </main>);
     }
 }

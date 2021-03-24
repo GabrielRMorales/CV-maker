@@ -4,7 +4,7 @@ import WorkFormInput from "./WorkFormInput";
 //save in state as workXP = [{company, position, dateStart, dateEnd}]
 
 const WorkForm = (props)=>{
-    const [workHistory, setWorkHistory]=useState([]);
+    const [workHistory, setWorkHistory]=useState([{}]);
 
     const workHistoryInputs = workHistory.map((work, index)=>{
         return < WorkFormInput onChange={(e)=>{
@@ -16,8 +16,7 @@ const WorkForm = (props)=>{
                 return work;
             });
             setWorkHistory(newWorkHistory);
-        }} 
-         val={workHistory} key={index} id={index} />;
+        }} val={workHistory} key={index} id={index} />;
     });
     return (<form id="workXP" onSubmit={(e: React.FormEvent)=>{
         e.preventDefault();
