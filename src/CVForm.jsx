@@ -11,14 +11,7 @@ import {addToCV, editCV, updateCV } from "./ActionCreators";
 class CVForm extends Component {
     constructor(props){
         super(props);
-        // this.state={
-        //     generalInfo: {},
-        //     educationXP: {},
-        //     workXP: [],
-        //     generalInfoState: false,
-        //     educationXPState: false,
-        //     workXPState: false
-        // }
+        
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,15 +19,22 @@ class CVForm extends Component {
     
     handleSubmit(e, data){
         e.preventDefault();
-        this.props.dispatch(addToCV(data, e.target.id));
+        this.props.addToCV(data, e.target.id);
+        //this.props.dispatch(addToCV(data, e.target.id));
+        //the above works too if you don't pass anything through mapDispatchToProps in the connect. Both will work, as long as you tweak the connect to either null or the functions you want
+    
     }
 
     handleClick(e){
-        this.props.dispatch(editCV(e.target.id));
-    }
+        this.props.editCV(e.target.id);
+        //this.props.dispatch(editCV(e.target.id));
+        //the above works too if you don't pass anything through mapDispatchToProps in the connect. Both will work, as long as you tweak the connect to either null or the functions you want
+    } 
     
     handleChange(e, element){
-     this.props.dispatch(updateCV(element, e.target.name, e.target.value));
+        this.props.updateCV(element, e.target.name, e.target.value);
+     //this.props.dispatch(updateCV(element, e.target.name, e.target.value));
+       //the above works too if you don't pass anything through mapDispatchToProps in the connect. Both will work, as long as you tweak the connect to either null or the functions you want
     }
 
     render(){
@@ -70,7 +70,7 @@ function mapStateToProps(reduxState){
     }
 }
 
-export default connect(mapStateToProps, null)(CVForm);
+export default connect(mapStateToProps, {addToCV, editCV, updateCV })(CVForm);
 //flows from rootReducer to MapStateToProps
 //then to each component
 //upon inputs, actionCreators are dispatched
