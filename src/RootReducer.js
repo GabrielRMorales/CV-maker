@@ -1,7 +1,9 @@
 import {ADD_TO_CV, EDIT_CV, UPDATE_CV } from "./ActionCreators";
 const initialState = {
-    generalInfo: {},
-    educationXP: {},
+    generalInfo: {
+    },
+    educationXP: {
+    },
     workXP: [],
     generalInfoState: false,
     educationXPState: false,

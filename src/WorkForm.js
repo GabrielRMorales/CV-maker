@@ -4,6 +4,7 @@ import WorkFormInput from "./WorkFormInput";
 //save in state as workXP = [{company, position, dateStart, dateEnd}]
 
 const WorkForm = (props)=>{
+    
     const [workHistory, setWorkHistory]=useState([{}]);
 
     const workHistoryInputs = workHistory.map((work, index)=>{
@@ -18,6 +19,10 @@ const WorkForm = (props)=>{
             setWorkHistory(newWorkHistory);
         }} val={workHistory} key={index} id={index} />;
     });
+
+    //can set workHistory in componentDidMount, taken as props in CVForm
+    //this will allow you to have the text saved in the edit
+
     return (<form id="workXP" onSubmit={(e: React.FormEvent)=>{
         e.preventDefault();
         let totalFormData=[];
